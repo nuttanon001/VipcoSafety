@@ -1,0 +1,24 @@
+<div class="master-dialog-vh">
+  <H5 style="color:cadetblue">Selected Employee</H5>
+  <div class="child-container">
+      <div class="center-content">
+        <div *ngIf="mode === 0;else ElseEmployee">
+          <dialog-employee-table (returnSelected)="onSelectedValue($event)"></dialog-employee-table>
+        </div>
+        <ng-template #ElseEmployee>
+          <dialog-employee-table (returnSelectesd)="onSelectedValues($event)" [OptionFilter]="groupCode" [isMultiple]="true"></dialog-employee-table>
+        </ng-template>
+      </div>
+      <div class="right-content mx-1">
+        <button mat-mini-fab color="accent" (click)="onSelectedClick()" matTooltip="select all"
+                [disabled]="(!getValue && !getValues)">
+          <mat-icon>done_all</mat-icon>
+        </button>
+        <hr />
+        <button mat-mini-fab color="warn" (click)="onCancelClick()"
+                matTooltip="close dialog">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+    </div>
+</div>

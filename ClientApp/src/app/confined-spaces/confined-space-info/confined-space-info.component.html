@@ -1,0 +1,59 @@
+<div *ngIf="InfoValue;else elseBlock">
+  <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>CONFINED SPACE WORK PERMIT</b></strong>
+      </ng-template>
+      <ng-container *ngIf="regConfig">
+        <dynamic-form [fields]="regConfig" (submit)="submitDynamicForm($event)">
+        </dynamic-form>
+      </ng-container>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>PPE && Equipment(s)</b></strong>
+      </ng-template>
+      <app-confined-space-equipment-table [dataRows]="InfoValue.ConfinedHasEquips" (returnSelectedWith)="OnEquipmentEvent($event)"
+                                          [readOnly]="denySave">
+      </app-confined-space-equipment-table>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>Checklist(s)</b></strong>
+      </ng-template>
+      <app-confined-space-checklist-table [dataRows]="InfoValue.ConfinedHasCheckLists" (returnSelectedWith)="OnCheckListEvent($event)"
+                                          [readOnly]="denySave">
+      </app-confined-space-checklist-table>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>Worker name</b></strong>
+      </ng-template>
+      <app-confined-space-empwork-table [dataRows]="InfoValue.ConfinedHasEmpWorks" (returnSelectedWith)="OnEmployeeWork($event)"
+                                        [readOnly]="denySave">
+      </app-confined-space-empwork-table>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>Controller name</b></strong>
+      </ng-template>
+      <app-confined-space-emphelp-table [dataRows]="InfoValue.ConfinedHasEmpHelps" (returnSelectedWith)="OnEmployeeHelp($event)"
+                                        [readOnly]="denySave">
+      </app-confined-space-emphelp-table>
+    </mat-step>
+    <!--app-confined-space-precaution-table-->
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>Special peraution(s)</b></strong>
+      </ng-template>
+      <app-confined-space-precaution-table [dataRows]="InfoValue.ConfinedHasPrecautions" (returnSelectedWith)="OnPrecaution($event)"
+                                           [readOnly]="denySave">
+      </app-confined-space-precaution-table>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
+<ng-template #elseBlock>
+  <mat-progress-bar mode="indeterminate" style="margin-top:50px;"></mat-progress-bar>
+  Waiting... for loading
+</ng-template>

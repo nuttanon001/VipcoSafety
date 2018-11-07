@@ -1,0 +1,81 @@
+<div class="master-container">
+  <form [formGroup]="reportForm" class="header">
+    <div>
+      <i class="fa fa-calendar-o" aria-hidden="true"></i>
+      <mat-form-field>
+        <input matInput [matDatepicker]="SDate" placeholder="Choose a date"
+               formControlName="SDate" [max]="reportForm.controls.EDate.value">
+        <mat-datepicker-toggle matSuffix [for]="SDate"></mat-datepicker-toggle>
+        <mat-datepicker #SDate></mat-datepicker>
+      </mat-form-field>
+      &nbsp;&ndash;&nbsp;
+      <mat-form-field>
+        <input matInput [matDatepicker]="EDate" placeholder="Choose a date"
+               formControlName="EDate" [min]="reportForm.controls.SDate.value">
+        <mat-datepicker-toggle matSuffix [for]="EDate"></mat-datepicker-toggle>
+        <mat-datepicker #EDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <i class="fa fa-product-hunt" aria-hidden="true"></i>
+      <mat-form-field style="width:250px;">
+        <input matInput placeholder="Filter By Employee" class="click-input"
+               (click)="onShowDialog('Employee')" readonly
+               formControlName="Where2">
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-mini-fab color="warn" (click)="resetFilter()"
+              matTooltipPosition="left" matTooltip="Reset all filter">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </form>
+  <div *ngIf="needReset" class="loading-shade">
+    <mat-spinner *ngIf="needReset"></mat-spinner>
+  </div>
+  <div class="detail">
+    <table *ngIf="!needReset" id="table1">
+      <p-table [first]="first" [columns]="columns" [value]="datasource" [lazy]="true" (onLazyLoad)="loadDataLazy($event)"
+               [totalRecords]="totalRecords" [loading]="loading" [scrollable]="true" scrollHeight="70vh" [style]="{width:'98vw'}">
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col *ngFor="let col of columns" [ngStyle]="{'width.px':col.width}">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width.px':col.width}"
+                class="PoHeader">
+              {{col.header}}
+              <p-sortIcon *ngIf="col.type === 1" [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [ngClass]="{'Wait1' : rowData['StatusWorkPermit'] === 1,
+                          'Complate1' : rowData['StatusWorkPermit'] === 2,
+                          'Cancel1' : rowData['StatusWorkPermit'] === 3}">
+            <td *ngFor="let col of columns" [ngStyle]="{'width.px':col.width}">
+              <span *ngIf="col.field !== 'Command';else elseBlock" [innerHtml]="rowData[col.field] || '-'"></span>
+              <ng-template #elseBlock>
+                <ng-container *ngIf="col.field === 'Command'" class="form-container-row">
+                  <button mat-icon-button color="primary" (click)="onComplate(rowData,false)"
+                          [disabled]="rowData['Complate'] || rowData['StatusWorkPermit'] === 3" matTooltip="Complate" class="ml-2">
+                    <mat-icon>check</mat-icon>
+                  </button>
+
+                  <button mat-icon-button color="warn" (click)="onComplate(rowData,true)"
+                          [disabled]="rowData['Complate'] || rowData['StatusWorkPermit'] !== 1" matTooltip="Cancel">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </ng-container>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </table>
+  </div>
+</div>
+
