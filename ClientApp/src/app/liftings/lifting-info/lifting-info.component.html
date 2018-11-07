@@ -1,0 +1,42 @@
+<div *ngIf="InfoValue;else elseBlock">
+  <mat-horizontal-stepper [linear]="true" #stepper="matHorizontalStepper">
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>LIFTING EQUIPMENT WORK PERMIT</b></strong>
+      </ng-template>
+      <ng-container *ngIf="regConfig && groupConfig">
+        <dynamic-group-form [fields]="regConfig" [groups]="groupConfig" (submit)="submitDynamicForm($event)">
+        </dynamic-group-form>
+      </ng-container>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>Degree of Lifting(s)</b></strong>
+      </ng-template>
+      <app-lifting-equipment-table [dataRows]="InfoValue.LiftingHasEquips" (returnSelectedWith)="OnCheckListEvent($event)"
+                                   [readOnly]="denySave">
+      </app-lifting-equipment-table>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>Checklist(s)</b></strong>
+      </ng-template>
+      <app-lifting-checklist-table [dataRows]="InfoValue.LiftingHasCheckLists" (returnSelectedWith)="OnEquipmentEvent($event)"
+                                   [readOnly]="denySave">
+      </app-lifting-checklist-table>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>
+        <strong><b>Special peraution(s)</b></strong>
+      </ng-template>
+      <app-lifting-percaution-table [dataRows]="InfoValue.LiftingHasPercautions" (returnSelectedWith)="OnPrecautionEvent($event)"
+                                    [readOnly]="denySave">
+      </app-lifting-percaution-table>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
+<ng-template #elseBlock>
+  <mat-progress-bar mode="indeterminate" style="margin-top:50px;"></mat-progress-bar>
+  Waiting... for loading
+</ng-template>
