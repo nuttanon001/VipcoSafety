@@ -513,7 +513,6 @@ export class LiftingInfoComponent extends
         name: "SupervisorName",
         disabled: this.denySave,
         value: this.InfoValue.SupervisorName,
-        readonly: true,
         group: "detail",
         validations: [
           {
@@ -535,7 +534,6 @@ export class LiftingInfoComponent extends
         name: "EngineerName",
         disabled: this.denySave,
         value: this.InfoValue.EngineerName,
-        readonly: true,
         group: "detail",
         validations: [
           {
@@ -557,7 +555,6 @@ export class LiftingInfoComponent extends
         name: "SignalName",
         disabled: this.denySave,
         value: this.InfoValue.SignalName,
-        readonly: true,
         group: "detail",
         validations: [
           {
@@ -579,7 +576,6 @@ export class LiftingInfoComponent extends
         name: "ControlCraneName",
         disabled: this.denySave,
         value: this.InfoValue.ControlCraneName,
-        readonly: false,
         continue: true,
         group:"detail",
         validations: [
@@ -602,7 +598,6 @@ export class LiftingInfoComponent extends
         name: "ControlName",
         disabled: this.denySave,
         value: this.InfoValue.ControlName,
-        readonly: true,
         group: "detail",
         validations: [
           {
@@ -624,7 +619,6 @@ export class LiftingInfoComponent extends
         name: "ConnectName",
         disabled: this.denySave,
         value: this.InfoValue.ConnectName,
-        readonly: false,
         continue: true,
         group: "detail",
         validations: [
